@@ -24,6 +24,8 @@ public partial class FileService : IFileService
         try
         {
             var createdFile = await _unitOfWork.Files.AddAsync(fileEntity);
+            var fileFormat = new FileHelper().GetFileXElement(result.Item2);
+            fileEntity.Information = fileFormat.ToString();
 
             return new(true) { Data = ToModel(createdFile) };
         }
@@ -31,26 +33,6 @@ public partial class FileService : IFileService
         {
             _logger.LogError($"Error occured at {nameof(FileService)}", e);
             throw new("Couldn't create File. Contact support.", e);
-        }
-    }
-
-    public async ValueTask<Result<FileStream>> GetFileByNameAsync(string filename)
-    {
-        var existingFilename = _unitOfWork.Files.GetAll().FirstOrDefault(f => f.Filename == filename);
-
-        if (existingFilename is null)
-            return new("File is not exist");
-
-        try
-        {
-            var file = await new FileHelper().GetFileByNameAsync(filename);
-            return new(true) { Data = file };
-
-        }
-        catch (Exception e)
-        {
-            _logger.LogError($"Error occured at {nameof(FileService)}", e);
-            throw new("Couldn't get File. Contact support.", e);
         }
     }
 }

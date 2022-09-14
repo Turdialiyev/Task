@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Task\\Task.csproj": {}
+    "E:\\PD\\Task\\Task.csproj": {}
   },
   "projects": {
-    "E:\\Task\\Task.csproj": {
+    "E:\\PD\\Task\\Task.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Task\\Task.csproj",
+        "projectUniqueName": "E:\\PD\\Task\\Task.csproj",
         "projectName": "Task",
-        "projectPath": "E:\\Task\\Task.csproj",
+        "projectPath": "E:\\PD\\Task\\Task.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "E:\\Task\\obj\\",
+        "outputPath": "E:\\PD\\Task\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -42,6 +42,10 @@
               "target": "Package",
               "version": "[22.9.0, )"
             },
+            "ExcelMapper": {
+              "target": "Package",
+              "version": "[5.2.429, )"
+            },
             "IronXL.Excel": {
               "target": "Package",
               "version": "[2022.9.8711, )"
@@ -67,6 +71,10 @@
             "Newtonsoft.json": {
               "target": "Package",
               "version": "[13.0.1, )"
+            },
+            "SpreadsheetGear": {
+              "target": "Package",
+              "version": "[8.7.15, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

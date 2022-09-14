@@ -1,17 +1,18 @@
 using System.IO.Compression;
+using System.Xml.Linq;
 using Aspose.Cells;
+using Ganss.Excel;
 using IronXL;
 using Newtonsoft.Json;
 
 namespace Task.Services;
 public class FileHelper : IFileHelper
 {
-
     public bool ValidateFile(IFormFile file)
     {
         var defineCsvOrXlsxFile = DefineCsvOrXlsxFile(file);
 
-        if ((file.Length > 0) && (file.Name == "file") && (defineCsvOrXlsxFile.ToLower() == "xlsx" || defineCsvOrXlsxFile.ToLower() == "csv"))
+        if ((file.Length > 0) && (file.Name == "file") && (defineCsvOrXlsxFile.ToLower() == "csv"))
             return true;
 
         return false;
@@ -19,55 +20,67 @@ public class FileHelper : IFileHelper
     public Tuple<string, string> WriteFileAsync(IFormFile file)
     {
         var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
-        var date = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
-        var filename = "import " + date + "." + fileFormat;
+        var filename = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
+        
         var textFile = "";
-         if (fileFormat.ToLower() == "csv")
+        if (fileFormat.ToLower() == "csv")
         {
             using (StreamReader reader = new StreamReader(file.OpenReadStream()))
             {
-                textFile = reader.ReadLine();
+                reader.ReadLine();
                 while (reader.Peek() != -1)
                 {
                     var line = reader.ReadLine();
-                    textFile += "." + line;
+                    textFile += line + ".";
                 }
             }
         }
-        else
-        {
-            // shu yerda xlsx fileni textlni o'qib olishimiz kerak
-        }
-
         return Tuple.Create(filename, textFile)!;
     }
-    private static byte[] ReadFully(Stream input)
+    public XElement GetFileXElement(string model)
     {
-        byte[] buffer = new byte[16 * 1024];
+        List<List<string>> result = new List<List<string>>();
+        string xml = model;
+        var eachRow = xml.Split('.').ToList();
+        eachRow.RemoveAt(eachRow.Count - 1);
 
-        using (MemoryStream ms = new MemoryStream())
+        foreach (var item in eachRow)
         {
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                ms.Write(buffer, 0, read);
-            }
+            var list = new List<string>();
+            var ar = item.Split(',').ToList();
+            foreach (var d in ar)
+                if (!(d.Equals("-")))
+                    list.Add(d);
 
-            return ms.ToArray();
+            result.Add(list);
         }
+
+        XElement xmlformat = new XElement("people");
+
+        foreach (var item in result)
+        {
+            XElement xmlPersons = new XElement("person");
+
+            for (int i = 0; i < 1; i++)
+                xmlPersons.Add(new XAttribute("name", item[i]), new XAttribute("age", item[i + 1]));
+            {
+                if (item.Count() > 2)
+                {
+                    XElement xmlPets = new XElement("pets");
+                    for (int j = 2; j < item.Count(); j += 2)
+                    {
+                        XElement xmlPet = new XElement("pet");
+                        xmlPet.Add(new XAttribute("name", item[j]), new XAttribute("type", item[j + 1]));
+                        xmlPets.Add(xmlPet);
+                    }
+                    xmlPersons.Add(xmlPets);
+                }
+            }
+            xmlformat.Add(xmlPersons);
+        }
+
+        return xmlformat;
     }
-    public async ValueTask<FileStream?> GetFileByNameAsync(string filename)
-    {
-        var filePath = Path.Combine(FileFolder, filename);
-
-        if (!File.Exists(filePath))
-            return null;
-
-        using var file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-
-        return file;
-    }
-
     public static string DefineCsvOrXlsxFile(IFormFile file)
     {
         var reverseFileName = Reverse(file.FileName);
@@ -83,22 +96,17 @@ public class FileHelper : IFileHelper
     {
 
         char[] charArray = fileName.ToCharArray();
-
         string reversedString = String.Empty;
-
         int length, index;
         length = charArray.Length - 1;
         index = length;
 
         while (index > -1)
         {
-
             reversedString = reversedString + charArray[index];
             index--;
         }
 
         return reversedString;
     }
-
-    private static string FileFolder => Path.Combine(Directory.GetCurrentDirectory(), "data/files");
 }
