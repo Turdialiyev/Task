@@ -3,6 +3,6 @@ namespace Task.Services;
 public interface IFileHelper
 {
     bool ValidateFile(IFormFile file);
-   ValueTask<string> WriteFileAsync(IFormFile file);
+    Tuple<string, string> WriteFileAsync(IFormFile file);
     ValueTask<FileStream?> GetFileByNameAsync(string filename);
 }

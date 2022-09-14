@@ -18,8 +18,8 @@ public partial class FileService : IFileService
         if (!new FileHelper().ValidateFile(file))
             return new("File is invalid");
 
-        var filename = new FileHelper().WriteFileAsync(file);
-        var fileEntity = new Task.Entities.File(filename.Result, "bu yerda fileni ishidagi textlari bo'lishi kerak");
+        var result = new FileHelper().WriteFileAsync(file);
+        var fileEntity = new Task.Entities.File(result.Item1, result.Item2);
 
         try
         {

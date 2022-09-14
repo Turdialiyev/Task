@@ -16,18 +16,30 @@ public class FileHelper : IFileHelper
 
         return false;
     }
-    public async ValueTask<string> WriteFileAsync(IFormFile file)
+    public Tuple<string, string> WriteFileAsync(IFormFile file)
     {
         var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
         var date = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
         var filename = "import " + date + "." + fileFormat;
+        var textFile = "";
+         if (fileFormat.ToLower() == "csv")
+        {
+            using (StreamReader reader = new StreamReader(file.OpenReadStream()))
+            {
+                textFile = reader.ReadLine();
+                while (reader.Peek() != -1)
+                {
+                    var line = reader.ReadLine();
+                    textFile += "." + line;
+                }
+            }
+        }
+        else
+        {
+            // shu yerda xlsx fileni textlni o'qib olishimiz kerak
+        }
 
-        var filePath = Path.Combine(FileFolder, filename);
-
-        using var fileStream = new FileStream(filePath, FileMode.Create, System.IO.FileAccess.Write);
-        await file.CopyToAsync(fileStream);
-
-        return filename;
+        return Tuple.Create(filename, textFile)!;
     }
     private static byte[] ReadFully(Stream input)
     {
