@@ -1,10 +1,5 @@
-using System.IO.Compression;
 using System.Xml.Linq;
-using Aspose.Cells;
 using ClosedXML.Excel;
-using Ganss.Excel;
-using IronXL;
-using Newtonsoft.Json;
 
 namespace Task.Services;
 public class FileHelper : IFileHelper
@@ -13,7 +8,7 @@ public class FileHelper : IFileHelper
     {
         var defineCsvOrXlsxFile = DefineCsvOrXlsxFile(file);
 
-        if ((file.Length > 0) && (file.Name == "file") && (defineCsvOrXlsxFile.ToLower() == "csv" || defineCsvOrXlsxFile.ToLower() == "xlsx"))
+        if ((defineCsvOrXlsxFile.ToLower() == "csv" || defineCsvOrXlsxFile.ToLower() == "xlsx"))
             return true;
 
         return false;
@@ -21,7 +16,6 @@ public class FileHelper : IFileHelper
     public Tuple<string, string> WriteFileAsync(IFormFile file)
     {
         var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
-        var filename = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
         var textFile = "";
         if (fileFormat.ToLower() == "csv")
         {
@@ -59,7 +53,7 @@ public class FileHelper : IFileHelper
             }
         }
         }
-        return Tuple.Create(filename, textFile)!;
+        return Tuple.Create(fileFormat, textFile)!;
     }
     public XElement GetFileXElement(string model)
     {
@@ -107,7 +101,7 @@ public class FileHelper : IFileHelper
 
         return xmlPeople;
     }
-    public static string DefineCsvOrXlsxFile(IFormFile file)
+    private static string DefineCsvOrXlsxFile(IFormFile file)
     {
         var reverseFileName = Reverse(file.FileName);
         var count = reverseFileName.Count();
@@ -116,16 +110,6 @@ public class FileHelper : IFileHelper
 
         return Reverse(reverseFileName);
 
-    }
-
-    private static async Task<string> FilePath(IFormFile file)
-    {
-        var filePath = Path.Combine(TestCaseFolder, file.FileName);
-
-        using var fileStream = new FileStream(filePath, FileMode.Create, System.IO.FileAccess.Write);
-        await file.CopyToAsync(fileStream);
-
-        return filePath;
     }
     //Revers
     public static string Reverse(string fileName)
@@ -145,5 +129,4 @@ public class FileHelper : IFileHelper
 
         return reversedString;
     }
-    private static string TestCaseFolder => Path.Combine(Directory.GetCurrentDirectory(), "data/file");
 }

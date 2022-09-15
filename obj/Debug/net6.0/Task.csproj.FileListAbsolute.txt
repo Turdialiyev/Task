@@ -96,10 +96,7 @@ E:\PD\Task\bin\Debug\net6.0\Task.deps.json
 E:\PD\Task\bin\Debug\net6.0\Task.runtimeconfig.json
 E:\PD\Task\bin\Debug\net6.0\Task.dll
 E:\PD\Task\bin\Debug\net6.0\Task.pdb
-E:\PD\Task\bin\Debug\net6.0\Aspose.Cells.dll
 E:\PD\Task\bin\Debug\net6.0\Humanizer.dll
-E:\PD\Task\bin\Debug\net6.0\IronSoftware.Drawing.Common.dll
-E:\PD\Task\bin\Debug\net6.0\IronXL.dll
 E:\PD\Task\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 E:\PD\Task\bin\Debug\net6.0\Microsoft.Data.Sqlite.dll
 E:\PD\Task\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
@@ -118,11 +115,6 @@ E:\PD\Task\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 E:\PD\Task\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 E:\PD\Task\bin\Debug\net6.0\Microsoft.OpenApi.dll
 E:\PD\Task\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-E:\PD\Task\bin\Debug\net6.0\Newtonsoft.Json.dll
-E:\PD\Task\bin\Debug\net6.0\SixLabors.Fonts.dll
-E:\PD\Task\bin\Debug\net6.0\SixLabors.ImageSharp.dll
-E:\PD\Task\bin\Debug\net6.0\SixLabors.ImageSharp.Drawing.dll
-E:\PD\Task\bin\Debug\net6.0\SpreadsheetGear.dll
 E:\PD\Task\bin\Debug\net6.0\SQLitePCLRaw.batteries_v2.dll
 E:\PD\Task\bin\Debug\net6.0\SQLitePCLRaw.core.dll
 E:\PD\Task\bin\Debug\net6.0\SQLitePCLRaw.provider.e_sqlite3.dll
@@ -133,7 +125,6 @@ E:\PD\Task\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
 E:\PD\Task\bin\Debug\net6.0\System.Drawing.Common.dll
 E:\PD\Task\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 E:\PD\Task\bin\Debug\net6.0\System.Runtime.Caching.dll
-E:\PD\Task\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
 E:\PD\Task\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 E:\PD\Task\bin\Debug\net6.0\System.Security.Permissions.dll
 E:\PD\Task\bin\Debug\net6.0\System.Windows.Extensions.dll
@@ -162,7 +153,6 @@ E:\PD\Task\bin\Debug\net6.0\runtimes\win-x86\native\e_sqlite3.dll
 E:\PD\Task\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 E:\PD\Task\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 E:\PD\Task\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
-E:\PD\Task\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
 E:\PD\Task\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 E:\PD\Task\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 E:\PD\Task\obj\Debug\net6.0\Task.csproj.AssemblyReference.cache
@@ -181,16 +171,7 @@ E:\PD\Task\obj\Debug\net6.0\refint\Task.dll
 E:\PD\Task\obj\Debug\net6.0\Task.pdb
 E:\PD\Task\obj\Debug\net6.0\Task.genruntimeconfig.cache
 E:\PD\Task\obj\Debug\net6.0\ref\Task.dll
-E:\PD\Task\bin\Debug\net6.0\ExcelMapper.dll
-E:\PD\Task\bin\Debug\net6.0\NPOI.OOXML.dll
-E:\PD\Task\bin\Debug\net6.0\NPOI.OpenXml4Net.dll
-E:\PD\Task\bin\Debug\net6.0\NPOI.OpenXmlFormats.dll
-E:\PD\Task\bin\Debug\net6.0\NPOI.dll
-E:\PD\Task\bin\Debug\net6.0\BouncyCastle.Crypto.dll
-E:\PD\Task\bin\Debug\net6.0\ICSharpCode.SharpZipLib.dll
-E:\PD\Task\bin\Debug\net6.0\System.Text.Json.dll
 E:\PD\Task\bin\Debug\net6.0\ClosedXML.dll
 E:\PD\Task\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
 E:\PD\Task\bin\Debug\net6.0\ExcelNumberFormat.dll
 E:\PD\Task\bin\Debug\net6.0\System.IO.Packaging.dll
-E:\PD\Task\bin\Debug\net6.0\CsvHelper.dll
