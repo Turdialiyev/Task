@@ -15,7 +15,7 @@ public class FileHelper : IFileHelper
     }
     public Tuple<string, string> WriteFileAsync(IFormFile file)
     {
-        var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
+        var fileFormat = DefineCsvOrXlsxFile(file);
         var textFile = "";
         if (fileFormat.ToLower() == "csv")
         {
@@ -101,7 +101,7 @@ public class FileHelper : IFileHelper
 
         return xmlPeople;
     }
-    private static string DefineCsvOrXlsxFile(IFormFile file)
+    private string DefineCsvOrXlsxFile(IFormFile file)
     {
         var reverseFileName = Reverse(file.FileName);
         var count = reverseFileName.Count();
