@@ -189,3 +189,8 @@ E:\PD\Task\bin\Debug\net6.0\NPOI.dll
 E:\PD\Task\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 E:\PD\Task\bin\Debug\net6.0\ICSharpCode.SharpZipLib.dll
 E:\PD\Task\bin\Debug\net6.0\System.Text.Json.dll
+E:\PD\Task\bin\Debug\net6.0\ClosedXML.dll
+E:\PD\Task\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
+E:\PD\Task\bin\Debug\net6.0\ExcelNumberFormat.dll
+E:\PD\Task\bin\Debug\net6.0\System.IO.Packaging.dll
+E:\PD\Task\bin\Debug\net6.0\CsvHelper.dll

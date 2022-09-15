@@ -42,6 +42,10 @@
               "target": "Package",
               "version": "[22.9.0, )"
             },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[28.0.1, )"
+            },
             "ExcelMapper": {
               "target": "Package",
               "version": "[5.2.429, )"
@@ -79,6 +83,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "closedxml": {
+              "target": "Package",
+              "version": "[0.96.0, )"
             }
           },
           "imports": [

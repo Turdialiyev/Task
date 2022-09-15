@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using System.Xml.Linq;
 using Aspose.Cells;
+using ClosedXML.Excel;
 using Ganss.Excel;
 using IronXL;
 using Newtonsoft.Json;
@@ -21,34 +22,42 @@ public class FileHelper : IFileHelper
     {
         var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
         var filename = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
-
         var textFile = "";
         if (fileFormat.ToLower() == "csv")
         {
             using (StreamReader reader = new StreamReader(file.OpenReadStream()))
             {
-                reader.ReadLine();
                 while (reader.Peek() != -1)
                 {
                     var line = reader.ReadLine();
                     textFile += line + ".";
                 }
             }
+            textFile = textFile.Substring(0, (textFile.Count()-1));
         }
         else
         {
-            using (StreamReader sr = new StreamReader(file.OpenReadStream()))
+             using (XLWorkbook excelWorkbook = new XLWorkbook(file.OpenReadStream()))
+        {
+            var xlWorksheet = excelWorkbook.Worksheet(1);
+            var range = xlWorksheet.Range(xlWorksheet.FirstCellUsed(), xlWorksheet.LastCellUsed());
+
+            var col = range.ColumnCount();
+            var row = range.RowCount();
+            
+            for (var i = 1; i <= row; i++)
             {
-                string line;
-                string[] columns = null;
-                while ((line = sr.ReadLine()) != null)
+                for (int j = 1; j <= col; j++)
                 {
-                    columns = line.Split(',');
-                    //now columns array has a ll data of column in a row!
-                    //like:
-                    string col1 = columns[0]; //and so on..
+                    var column = xlWorksheet.Cell(i, j);
+                    textFile += column.Value.ToString();
+                    if (j != col)
+                        textFile += ",";
                 }
+                if (i != row)
+                    textFile += ".";
             }
+        }
         }
         return Tuple.Create(filename, textFile)!;
     }
@@ -57,12 +66,13 @@ public class FileHelper : IFileHelper
         List<List<string>> result = new List<List<string>>();
         string xml = model;
         var eachRow = xml.Split('.').ToList();
-        eachRow.RemoveAt(eachRow.Count - 1);
+        eachRow.RemoveAt(0);
 
         foreach (var item in eachRow)
         {
             var list = new List<string>();
             var ar = item.Split(',').ToList();
+
             foreach (var d in ar)
                 if (!(d.Equals("-")))
                     list.Add(d);
@@ -107,6 +117,16 @@ public class FileHelper : IFileHelper
         return Reverse(reverseFileName);
 
     }
+
+    private static async Task<string> FilePath(IFormFile file)
+    {
+        var filePath = Path.Combine(TestCaseFolder, file.FileName);
+
+        using var fileStream = new FileStream(filePath, FileMode.Create, System.IO.FileAccess.Write);
+        await file.CopyToAsync(fileStream);
+
+        return filePath;
+    }
     //Revers
     public static string Reverse(string fileName)
     {
@@ -125,4 +145,5 @@ public class FileHelper : IFileHelper
 
         return reversedString;
     }
+    private static string TestCaseFolder => Path.Combine(Directory.GetCurrentDirectory(), "data/file");
 }
