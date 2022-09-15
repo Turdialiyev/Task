@@ -35,6 +35,21 @@ public class FileHelper : IFileHelper
                 }
             }
         }
+        else
+        {
+            using (StreamReader sr = new StreamReader(file.OpenReadStream()))
+            {
+                string line;
+                string[] columns = null;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    columns = line.Split(',');
+                    //now columns array has a ll data of column in a row!
+                    //like:
+                    string col1 = columns[0]; //and so on..
+                }
+            }
+        }
         return Tuple.Create(filename, textFile)!;
     }
     public XElement GetFileXElement(string model)
@@ -64,7 +79,7 @@ public class FileHelper : IFileHelper
             for (int i = 0; i < 1; i++)
             {
                 xmlPersons.Add(new XAttribute("name", item[i]), new XAttribute("age", item[i + 1]));
-                
+
                 if (item.Count() > 2)
                 {
                     XElement xmlPets = new XElement("pets");
