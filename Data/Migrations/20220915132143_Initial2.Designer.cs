@@ -11,8 +11,8 @@ using Task.Data;
 namespace Task.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220914161511_1sqlserver")]
-    partial class _1sqlserver
+    [Migration("20220915132143_Initial2")]
+    partial class Initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
