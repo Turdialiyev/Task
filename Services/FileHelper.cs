@@ -1,9 +1,5 @@
-using System.IO.Compression;
 using System.Xml.Linq;
-using Aspose.Cells;
-using Ganss.Excel;
-using IronXL;
-using Newtonsoft.Json;
+using ClosedXML.Excel;
 
 namespace Task.Services;
 public class FileHelper : IFileHelper
@@ -12,7 +8,7 @@ public class FileHelper : IFileHelper
     {
         var defineCsvOrXlsxFile = DefineCsvOrXlsxFile(file);
 
-        if ((file.Length > 0) && (file.Name == "file") && (defineCsvOrXlsxFile.ToLower() == "csv" || defineCsvOrXlsxFile.ToLower() == "xlsx"))
+        if ((defineCsvOrXlsxFile.ToLower() == "csv" || defineCsvOrXlsxFile.ToLower() == "xlsx"))
             return true;
 
         return false;
@@ -20,34 +16,57 @@ public class FileHelper : IFileHelper
     public Tuple<string, string> WriteFileAsync(IFormFile file)
     {
         var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
-        var filename = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
-
         var textFile = "";
         if (fileFormat.ToLower() == "csv")
         {
             using (StreamReader reader = new StreamReader(file.OpenReadStream()))
             {
-                reader.ReadLine();
                 while (reader.Peek() != -1)
                 {
                     var line = reader.ReadLine();
                     textFile += line + ".";
                 }
             }
+            textFile = textFile.Substring(0, (textFile.Count()-1));
         }
-        return Tuple.Create(filename, textFile)!;
+        else
+        {
+             using (XLWorkbook excelWorkbook = new XLWorkbook(file.OpenReadStream()))
+        {
+            var xlWorksheet = excelWorkbook.Worksheet(1);
+            var range = xlWorksheet.Range(xlWorksheet.FirstCellUsed(), xlWorksheet.LastCellUsed());
+
+            var col = range.ColumnCount();
+            var row = range.RowCount();
+            
+            for (var i = 1; i <= row; i++)
+            {
+                for (int j = 1; j <= col; j++)
+                {
+                    var column = xlWorksheet.Cell(i, j);
+                    textFile += column.Value.ToString();
+                    if (j != col)
+                        textFile += ",";
+                }
+                if (i != row)
+                    textFile += ".";
+            }
+        }
+        }
+        return Tuple.Create(fileFormat, textFile)!;
     }
     public XElement GetFileXElement(string model)
     {
         List<List<string>> result = new List<List<string>>();
         string xml = model;
         var eachRow = xml.Split('.').ToList();
-        eachRow.RemoveAt(eachRow.Count - 1);
+        eachRow.RemoveAt(0);
 
         foreach (var item in eachRow)
         {
             var list = new List<string>();
             var ar = item.Split(',').ToList();
+
             foreach (var d in ar)
                 if (!(d.Equals("-")))
                     list.Add(d);
@@ -64,7 +83,7 @@ public class FileHelper : IFileHelper
             for (int i = 0; i < 1; i++)
             {
                 xmlPersons.Add(new XAttribute("name", item[i]), new XAttribute("age", item[i + 1]));
-                
+
                 if (item.Count() > 2)
                 {
                     XElement xmlPets = new XElement("pets");
@@ -82,7 +101,7 @@ public class FileHelper : IFileHelper
 
         return xmlPeople;
     }
-    public static string DefineCsvOrXlsxFile(IFormFile file)
+    private static string DefineCsvOrXlsxFile(IFormFile file)
     {
         var reverseFileName = Reverse(file.FileName);
         var count = reverseFileName.Count();

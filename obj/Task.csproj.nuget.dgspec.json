@@ -38,18 +38,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Aspose.Cells": {
-              "target": "Package",
-              "version": "[22.9.0, )"
-            },
-            "ExcelMapper": {
-              "target": "Package",
-              "version": "[5.2.429, )"
-            },
-            "IronXL.Excel": {
-              "target": "Package",
-              "version": "[2022.9.8711, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.8, )"
@@ -68,17 +56,13 @@
               "target": "Package",
               "version": "[6.0.8, )"
             },
-            "Newtonsoft.json": {
-              "target": "Package",
-              "version": "[13.0.1, )"
-            },
-            "SpreadsheetGear": {
-              "target": "Package",
-              "version": "[8.7.15, )"
-            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "closedxml": {
+              "target": "Package",
+              "version": "[0.96.0, )"
             }
           },
           "imports": [

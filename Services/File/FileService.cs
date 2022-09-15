@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Task.Models;
 using Task.Repositories;
 
@@ -15,18 +14,24 @@ public partial class FileService : IFileService
 
     public async ValueTask<Result<Task.Models.File>> CreateFileAsync(IFormFile file)
     {
+        if (!(file.Length > 0))
+            return new("File is empty");
+        
         if (!new FileHelper().ValidateFile(file))
             return new("only csv and xlsx files are accepted.");
 
         var result = new FileHelper().WriteFileAsync(file);
-        var fileEntity = new Task.Entities.File(result.Item1, result.Item2);
+        var filename = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
+
+        var fileEntity = new Task.Entities.File(filename + result.Item1, result.Item2);
 
         try
         {
             var createdFile = await _unitOfWork.Files.AddAsync(fileEntity);
             var fileFormat = new FileHelper().GetFileXElement(result.Item2);
-            
+
             fileEntity.Information = fileFormat.ToString();
+            fileEntity.Filename = filename + ".xml";
 
             return new(true) { Data = ToModel(createdFile) };
         }
