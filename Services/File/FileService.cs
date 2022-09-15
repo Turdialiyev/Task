@@ -16,7 +16,7 @@ public partial class FileService : IFileService
     public async ValueTask<Result<Task.Models.File>> CreateFileAsync(IFormFile file)
     {
         if (!new FileHelper().ValidateFile(file))
-            return new("File is invalid");
+            return new("only csv and xlsx files are accepted.");
 
         var result = new FileHelper().WriteFileAsync(file);
         var fileEntity = new Task.Entities.File(result.Item1, result.Item2);
@@ -25,6 +25,7 @@ public partial class FileService : IFileService
         {
             var createdFile = await _unitOfWork.Files.AddAsync(fileEntity);
             var fileFormat = new FileHelper().GetFileXElement(result.Item2);
+            
             fileEntity.Information = fileFormat.ToString();
 
             return new(true) { Data = ToModel(createdFile) };

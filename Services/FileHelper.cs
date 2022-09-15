@@ -12,7 +12,7 @@ public class FileHelper : IFileHelper
     {
         var defineCsvOrXlsxFile = DefineCsvOrXlsxFile(file);
 
-        if ((file.Length > 0) && (file.Name == "file") && (defineCsvOrXlsxFile.ToLower() == "csv"))
+        if ((file.Length > 0) && (file.Name == "file") && (defineCsvOrXlsxFile.ToLower() == "csv" || defineCsvOrXlsxFile.ToLower() == "xlsx"))
             return true;
 
         return false;
@@ -21,7 +21,7 @@ public class FileHelper : IFileHelper
     {
         var fileFormat = FileHelper.DefineCsvOrXlsxFile(file);
         var filename = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'hh'-'mm'-'ss");
-        
+
         var textFile = "";
         if (fileFormat.ToLower() == "csv")
         {
@@ -55,15 +55,16 @@ public class FileHelper : IFileHelper
             result.Add(list);
         }
 
-        XElement xmlformat = new XElement("people");
+        XElement xmlPeople = new XElement("people");
 
         foreach (var item in result)
         {
             XElement xmlPersons = new XElement("person");
 
             for (int i = 0; i < 1; i++)
-                xmlPersons.Add(new XAttribute("name", item[i]), new XAttribute("age", item[i + 1]));
             {
+                xmlPersons.Add(new XAttribute("name", item[i]), new XAttribute("age", item[i + 1]));
+                
                 if (item.Count() > 2)
                 {
                     XElement xmlPets = new XElement("pets");
@@ -76,10 +77,10 @@ public class FileHelper : IFileHelper
                     xmlPersons.Add(xmlPets);
                 }
             }
-            xmlformat.Add(xmlPersons);
+            xmlPeople.Add(xmlPersons);
         }
 
-        return xmlformat;
+        return xmlPeople;
     }
     public static string DefineCsvOrXlsxFile(IFormFile file)
     {

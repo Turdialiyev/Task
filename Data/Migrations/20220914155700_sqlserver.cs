@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace Task.data.Migrations
+namespace Task.Data.Migrations
 {
-    public partial class Create_Files_Table : Migration
+    public partial class sqlserver : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +12,10 @@ namespace Task.data.Migrations
                 name: "Files",
                 columns: table => new
                 {
-                    Id = table.Column<ulong>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Filename = table.Column<string>(type: "TEXT", nullable: true),
-                    Information = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Filename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Information = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
